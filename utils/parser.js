@@ -12,6 +12,10 @@ class Parser {
         const dom = new JSDOM(this.html);
         this.document = dom.window.document; 
     }
+
+    getTitle() {
+        return this.document.querySelector("h1").textContent.trim();
+      }
   
     getQuestionAsDOM() {
         return this.document.querySelector(".question");
@@ -20,29 +24,31 @@ class Parser {
     getQuestion() {
         const question = this.getQuestionAsDOM();
         const votes = this.getVote(question);
-        const user = this.getUser(question);
+        const user = this.getUsername(question);
         const paragraphs = this.getparagraphs(question);
         const answerQuantity = this.getQuantityAnswers();
+        const date = this.getDate(question);
         return {
             votes,
             user,
             paragraphs,
             answerQuantity,
+            date,
             question: question.outerHTML
         };
     }
+
+        /*getTitle(element) {
+            const title = element.querySelector("h1").textContent;
+            return title;
+        }*/
 
         getVote(element) {
             const votes = element.querySelector(".js-vote-count").textContent;
             return parseInt(votes);
         }
-
-        getUser(element) {
-            const user = element.querySelector(".post-signature.owner .user-details a").href;
-            return user;
-        }
         
-        getAnswerUser(element) {
+        getUsername(element) {
             const users = Array.from(element.querySelectorAll(".user-details a"));
             if (users.length == 0)
                 return "" ;   
@@ -57,6 +63,11 @@ class Parser {
             return paragraphs;
         }
 
+        getQuantityAnswers() {
+            const answers = this.getAnswersAsDOM();
+            return answers.length;
+        }
+
     getAnswersAsDOM() {
         return Array.from(this.document.querySelectorAll(".answer"));
     }
@@ -65,24 +76,21 @@ class Parser {
         const answer= this.getAnswerAsDOM();
             return answer.map((answer) => {
             const votes = this.getVote(answer);
-            const user = this.getAnswerUser(answer);
+            const user = this.getUsername(answer);
             const links = this.getLinks(answer);
+            const date = this.getDate(answer);
                 return {
             votes,
             user,
             links,
+            date,
             answer: answer.outerHTML
         }
     });
-    }
-    
-        getQuantityAnswers() {
-            const answers = this.getAnswersAsDOM();
-            return answers.length;
-        }
+    }    
 
-        getDate() {
-            const date = Array.from(this.document.querySelectorAll(".user-action-time span"));
+        getDate(element) {
+            const date = Array.from(element.querySelectorAll(".user-action-time span"));
             if (date.length == 0)
                 return "" ;
             if (date.length == 1)

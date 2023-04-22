@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.9% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/42</span>
+                <span class='fraction'>24/40</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60.97% </span>
+                <span class="strong">58.97% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/41</span>
+                <span class='fraction'>23/39</span>
             </div>
         
             
@@ -205,22 +205,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -299,7 +299,7 @@ class Parser {
 <span class="fstat-no" title="function not covered" >    ge</span>tQuestion() {
         const question = <span class="cstat-no" title="statement not covered" >this.getQuestionAsDOM();</span>
         const votes = <span class="cstat-no" title="statement not covered" >this.getVote(question);</span>
-        const user = <span class="cstat-no" title="statement not covered" >this.getUser(question);</span>
+        const user = <span class="cstat-no" title="statement not covered" >this.getUsername(question);</span>
         const paragraphs = <span class="cstat-no" title="statement not covered" >this.getparagraphs(question);</span>
         const answerQuantity = <span class="cstat-no" title="statement not covered" >this.getQuantityAnswers();</span>
 <span class="cstat-no" title="statement not covered" >        return {</span>
@@ -311,17 +311,17 @@ class Parser {
         };
     }
 &nbsp;
+        /*getTitle(element) {
+            const title = element.querySelector("h1").textContent;
+            return title;
+        }*/
+&nbsp;
         getVote(element) {
             const votes = element.querySelector(".js-vote-count").textContent;
             return parseInt(votes);
         }
-&nbsp;
-        getUser(element) {
-            const user = element.querySelector(".post-signature.owner .user-details a").href;
-            return user;
-        }
         
-        getAnswerUser(element) {
+        getUsername(element) {
             const users = Array.from(element.querySelectorAll(".user-details a"));
             <span class="missing-if-branch" title="if path not taken" >I</span>if (users.length == 0)
 <span class="cstat-no" title="statement not covered" >                return "" ;   </span>
@@ -344,7 +344,7 @@ class Parser {
         const answer= <span class="cstat-no" title="statement not covered" >this.getAnswerAsDOM();</span>
 <span class="cstat-no" title="statement not covered" >            return answer.map(<span class="fstat-no" title="function not covered" >(a</span>nswer) =&gt; {</span>
             const votes = <span class="cstat-no" title="statement not covered" >this.getVote(answer);</span>
-            const user = <span class="cstat-no" title="statement not covered" >this.getAnswerUser(answer);</span>
+            const user = <span class="cstat-no" title="statement not covered" >this.getUsername(answer);</span>
             const links = <span class="cstat-no" title="statement not covered" >this.getLinks(answer);</span>
 <span class="cstat-no" title="statement not covered" >                return {</span>
             votes,
@@ -360,8 +360,8 @@ class Parser {
             return answers.length;
         }
 &nbsp;
-        getDate() {
-            const date = Array.from(this.document.querySelectorAll(".user-action-time span"));
+        getDate(element) {
+            const date = Array.from(element.querySelectorAll(".user-action-time span"));
             <span class="missing-if-branch" title="if path not taken" >I</span>if (date.length == 0)
 <span class="cstat-no" title="statement not covered" >                return "" ;</span>
             <span class="missing-if-branch" title="if path not taken" >I</span>if (date.length == 1)
@@ -391,7 +391,7 @@ export default Parser;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-04-21T07:58:39.385Z
+                at 2023-04-21T11:21:09.409Z
             </div>
         <script src="prettify.js"></script>
         <script>

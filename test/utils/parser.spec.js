@@ -9,10 +9,21 @@ describe("Parser", () => {
         parser = new Parser(html);
     });
 
+    it("Debería devolver el título de la pregunta", () => {
+        const title = parser.getTitle();
+        expect(title).toContain("How do I undo 'git add' before commit?");
+    });
+
     it("Debería devolver una pregunta en formato DOM", () => {
         const question = parser.getQuestionAsDOM();
         expect(question.innerHTML).toContain("How do I undo this so that these changes will not be included in the commit?");
     });
+
+    /*it("Debería devolver el título de una pregunta", () => {
+        const question = parser.getQuestionAsDOM();
+        const title = parser.getTitle(question);
+        expect(title).toContain("How do I undo 'git add' before commit?");
+    });*/
 
     it("Debería devolver el número de votos de una pregunta", () => {
         const question = parser.getQuestionAsDOM();
@@ -22,7 +33,7 @@ describe("Parser", () => {
 
     it("Debería devolver el usuario de una pregunta", () => {
         const question = parser.getQuestionAsDOM();
-        const user = parser.getUser(question);
+        const user = parser.getUsername(question);
         expect(user).toContain("oz10");
     });
 
@@ -45,8 +56,8 @@ describe("Parser", () => {
 
     it("Debería devolver el usuario de la primera respuesta", () => {
         const answer = parser.getAnswersAsDOM();
-        const user = parser.getAnswerUser(answer[0]);
-        expect(user).toEqual("/users/14069/oz10");
+        const user = parser.getUsername(answer[0]);
+        expect(user).toEqual("/users/39933/genehack");
     });
 
     it ("Debería devolver el número de respuestas", () => {
@@ -58,6 +69,12 @@ describe("Parser", () => {
     it ("Debería devolver la fecha de la pregunta", () => {
         const answer = parser.getAnswersAsDOM();
         const date = parser.getDate(answer[0]);
+        expect(date).toContain("Dec 7, 2008 at 22:30")
+    });
+
+    it ("Debería devolver la fecha de la pregunta", () => {
+        const question = parser.getQuestionAsDOM();
+        const date = parser.getDate(question);
         expect(date).toContain("Dec 7, 2008 at 21:57")
     });
 
@@ -68,7 +85,3 @@ describe("Parser", () => {
     });
 
 });
-/* getVote(element) {
-    const votes = element.querySelector(".js-vote-count").textContent;
-    return parseInt(votes);
-} */
