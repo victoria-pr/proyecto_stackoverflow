@@ -1,9 +1,26 @@
 import express from "express";
 import stackoverflowController from "./controllers/stackoverflowController.js";
 import path from "path";
-
+/**
+ * @description - Main file of the application
+ * @module index 
+ * @requires express - to create the server
+ * @requires stackoverflowController - to get the content of the stackoverflow question
+ * @requires path - to get the path of the file
+ */
 
 const app = express(); 
+
+/**
+ * @description - Endpoint to get the content of a stackoverflow question
+ * @name get/
+ * @function 
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ * @returns {string} - HTML with the content of the question and its answers
+ * @throws {Error} - If there is an error
+ * @example - http://localhost:3000/?q=javascript+async+await
+ */
 
 app.get("/", async (req, res) => {
     try {
@@ -16,12 +33,13 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/search", async (req, res) => {
-    try {
-        const  query= req.query.q;
-        const { title, question, answers } = await stackoverflowController.getContent(query);
+        const query= req.query.q;
+        const response = await stackoverflowController.getMultipleStackContent(query);
+        const {title, question, answers} = response[0];
         res.send(`
         <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Shared/stacks.css?v=83d4b324173a">
         <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Sites/stackoverflow/primary.css?v=5e2d45054eda">
+        <a href="/" class="s-btn s-btn__primary">Inicio</a>
         <h1>${title}</h1>
         <div>${question.question}</div>
         <div>${question.date}</div>
@@ -35,11 +53,8 @@ app.get("/search", async (req, res) => {
             <div>${answer.votes}</div>
             `).join("")}</div>))` //join para que no salga la coma entre cada respuesta
     );
-    }
-    catch (error) {
-        res.send("Ha habido un herror");
-    }
-});
+ 
+}); 
 
 /* 
 FORMATO API

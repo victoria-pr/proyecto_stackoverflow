@@ -153,7 +153,6 @@ class Parser {
         /**
          * Returns the links of the answer
          * @method
-         * @param {*} element - answer in DOM format
          * @returns {href[]} - Array with the links of the answer 
          */
         getAnswerLinks() {

@@ -1,6 +1,11 @@
 import Parser from "../utils/parser.js";
 import Scraper from "../utils/scraper.js";
-
+/**
+ * searchLinks - search links in google
+ * @async 
+ * @param {string} query - query to search in google
+ * @returns {string[]} - Array with the links of the search
+ */
 async function searchLinks(query){
     const encodedQuery = encodeURIComponent(query);
     const url = `https://www.google.com/search?q=${encodedQuery}`;
