@@ -19,12 +19,6 @@ describe("Parser", () => {
         expect(question.innerHTML).toContain("How do I undo this so that these changes will not be included in the commit?");
     });
 
-    /*it("Debería devolver el título de una pregunta", () => {
-        const question = parser.getQuestionAsDOM();
-        const title = parser.getTitle(question);
-        expect(title).toContain("How do I undo 'git add' before commit?");
-    });*/
-
     it("Debería devolver el número de votos de una pregunta", () => {
         const question = parser.getQuestionAsDOM();
         const votes = parser.getVote(question);
@@ -80,8 +74,15 @@ describe("Parser", () => {
 
     it ("Debería devolver los links de la pregunta", () => {
         const answer = parser.getAnswersAsDOM();
-        const links = parser.getLinks(answer);
+        const links = parser.getAnswerLinks(answer);
         expect(links).toContain("https://git-scm.com/book/en/v2/Git-Tools-Interactive-Staging")
     });
 
 });
+
+
+/*it("Debería devolver el título de una pregunta", () => {
+        const question = parser.getQuestionAsDOM();
+        const title = parser.getTitle(question);
+        expect(title).toContain("How do I undo 'git add' before commit?");
+    });*/

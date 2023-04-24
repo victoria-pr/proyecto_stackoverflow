@@ -1,0 +1,32 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:5
+    container_name: mongo-stack
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: stack
+    ports:
+      - 27019:27017
+    volumes:
+      - ~/stackOverflowData/mongo:/data/db
+    networks:
+      - stack
+
+  node:
+    build: .
+    container_name: node-stack
+    restart: always
+    ports:
+      - 3001:3000
+    depends_on:
+        - mongo
+    networks:
+        - stack
+    volumes:
+        - ./:/usr/src/app
+        - exclude:/usr/src/app/node_modules/
+volumes:
+  exclude:
+networks:
+  stack: 
