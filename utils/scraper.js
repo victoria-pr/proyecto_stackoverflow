@@ -46,7 +46,5 @@ class Scraper{
     async close(){
         await this.browser.close();
     }
-
 }
-
 export default Scraper;

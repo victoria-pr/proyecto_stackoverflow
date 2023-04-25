@@ -42,16 +42,9 @@ app.get("/search", async (req, res) => {
         <a href="/" class="s-btn s-btn__primary">Inicio</a>
         <h1>${title}</h1>
         <div>${question.question}</div>
-        <div>${question.date}</div>
-        <div>${question.user}</div>
-        <div>${question.votes}</div>
-        <div>${question.answerQuantity}</div>
         <div>${answers.map((answer) => `
             <div>${answer.answer}</div>
-            <div>${answer.date}</div>
-            <div>${answer.user}</div>
-            <div>${answer.votes}</div>
-            `).join("")}</div>))` //join para que no salga la coma entre cada respuesta
+            `).join("")}</div>` //join para que no salga la coma entre cada respuesta
     );
  
 }); 
@@ -71,3 +64,24 @@ app.get("/", async (req, res) => {
 }); */
 
 app.listen(3000, () => console.log("Listening on port 3000"));
+
+
+
+
+/*
+<link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Shared/stacks.css?v=83d4b324173a">
+        <link rel="stylesheet" type="text/css" href="https://cdn.sstatic.net/Sites/stackoverflow/primary.css?v=5e2d45054eda">
+        <a href="/" class="s-btn s-btn__primary">Inicio</a>
+        <h1>${title}</h1>
+        <div>${question.question}</div>
+        <div>${question.date}</div>
+        <div>${question.user}</div>
+        <div>${question.votes}</div>
+        <div>${question.answerQuantity}</div>
+        <div>${answers.map((answer) => `
+            <div>${answer.answer}</div>
+            <div>${answer.date}</div>
+            <div>${answer.user}</div>
+            <div>${answer.votes}</div>
+            `).join("")}</div>))`
+*/

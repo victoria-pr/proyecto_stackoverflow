@@ -30,6 +30,7 @@ class Parser {
     }
     /**
      * Returns the title of the page
+     * @method
      * @returns {string} 
      */
     getTitle() {
@@ -67,7 +68,7 @@ class Parser {
         /**
          * Returns the votes of a question or answer
          * @method
-         * @param {*} element - question or answer in DOM format
+         * @param {number} element - question or answer in DOM format
          * @returns {number} - Number of votes
          */
         getVote(element) {
